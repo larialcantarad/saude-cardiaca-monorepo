@@ -3,6 +3,8 @@ package com.example.saudecardiaca.controller;
 import com.example.saudecardiaca.model.Acompanhamento;
 import com.example.saudecardiaca.service.AcompanhamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,15 +17,19 @@ public class AcompanhamentoController {
     private AcompanhamentoService service;
 
     @PostMapping
-    public String cadastrar(@RequestBody Acompanhamento acompanhamento) {
+    public ResponseEntity<Acompanhamento> cadastrar(
+            @RequestBody Acompanhamento acompanhamento) {
 
-        service.cadastrar(acompanhamento);
+        Acompanhamento novoAcompanhamento =
+                service.cadastrar(acompanhamento);
 
-        return "Registro criado com sucesso!";
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(novoAcompanhamento);
     }
 
     @GetMapping
-    public List<Acompanhamento> listar() {
-        return service.listar();
+    public ResponseEntity<List<Acompanhamento>> listar() {
+        return ResponseEntity.ok(service.listar());
     }
 }

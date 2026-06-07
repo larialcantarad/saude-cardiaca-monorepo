@@ -1,9 +1,15 @@
 package com.example.saudecardiaca.model;
 
 import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "acompanhamentos")
 public class Acompanhamento {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String pressaoArterial;
     private int frequenciaCardiaca;
     private double oxigenacao;
