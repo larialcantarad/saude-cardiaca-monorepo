@@ -1,0 +1,116 @@
+/* Estética SUS - Saúde Cardíaca */
+
+/* Cores Oficiais do SUS e Cardiologia */
+:root {
+  --sus-blue: #005baa;   /* Azul SUS */
+  --sus-green: #00a859;  /* Verde SUS */
+  --sus-light-blue: #4290d8; 
+  --cardio-red: #e53935; /* Vermelho Cardíaco */
+}
+
+/* Navbar Inferior (TabBar) - Forçando cores claras para ficar profissional */
+.sus-tab-bar {
+  --background: #ffffff;
+  border-top: 3px solid var(--sus-blue); 
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  height: 70px; /* Boas práticas: barra de navegação maior para facilitar o toque (Touch Target) */
+  padding-bottom: 8px; /* Afasta os ícones da borda inferior da tela */
+}
+
+.sus-tab-button {
+  --color: #999999; /* Ícones inativos cinza claro */
+  --color-selected: var(--sus-blue); /* Ícone ativo fica Azul SUS */
+  --background: #ffffff;
+  font-weight: 500;
+}
+
+/* Personalizando o topo da aplicação (Header global) */
+.sus-header {
+  --background: var(--sus-blue);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  --min-height: 64px; /* Maior conforto visual e área de toque */
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/* SVG Customizado do Coração/Batimento na TopBar */
+.logo-cardiologia {
+  width: 26px;
+  height: 26px;
+  fill: var(--cardio-red);
+  margin-right: 12px;
+  vertical-align: middle;
+  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.2)); /* Sombreado elegante no coração */
+}
+
+/* Botões do sistema */
+.custom-button {
+  --background: var(--sus-blue) !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.custom-button:hover {
+  --background: #004585 !important;
+}
+
+/* Títulos */
+.custom-title {
+  color: var(--sus-blue) !important;
+}
+
+/* Background Temático com Padrão de Eletrocardiograma (ECG) */
+.custom-background {
+  --background: #f0f4f8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 250 250'%3E%3Cpath d='M 0 125 L 80 125 L 95 85 L 125 185 L 145 125 L 250 125' fill='none' stroke='%23005baa' stroke-width='3' opacity='0.03' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") repeat !important;
+}
+
+/* Estilização Extra para o Card Flutuante parecer mais "Premium" */
+.custom-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); /* Efeito de vidro (Glassmorphism) */
+  border: 1px solid rgba(0, 91, 170, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 91, 170, 0.08) !important;
+}
+
+/* ==============================================================
+   Faz o app parecer um celular centralizado quando aberto no Desktop
+   ============================================================== */
+@media (min-width: 768px) {
+  body {
+    background-color: #d1d8e0; /* Fundo cinza ao redor do "celular" */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  ion-app {
+    max-width: 414px; /* Largura de um iPhone Max */
+    height: 90vh !important; /* Quase a altura da tela toda */
+    position: relative !important;
+    margin: auto;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); /* Sombra pesada para dar profundidade */
+    border: 8px solid #ffffff; /* Borda branca simulando a carcaça do celular */
+  }
+
+  /* Corrige a barra inferior para não ficar "voando" fora do raio da borda */
+  .sus-tab-bar {
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+  }
+}
+
+/* 
+  Notificações Toast Customizadas
+  Empurra o Toast 70px para baixo para ele ficar exatemente sob a TopBar Azul
+  sem cobrir o texto da barra e sem colar no cartão central
+*/
+ion-toast.custom-toast {
+  margin-top: 70px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --border-radius: 12px;
+}

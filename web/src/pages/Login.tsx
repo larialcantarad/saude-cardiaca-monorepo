@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { IonPage, IonContent, IonIcon, IonSpinner } from '@ionic/react';
+import { IonPage, IonContent, IonIcon, IonSpinner, IonRouterLink } from '@ionic/react';
 import { eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import authService from '../services/auth.service';
-import './Login.css';
+import TopBar from '../components/TopBar';
 
-const Login: React.FC = () => {
+interface LoginProps {
+  onLogin?: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -35,7 +39,8 @@ const Login: React.FC = () => {
     setCarregando(true);
     try {
       await authService.login({ email, senha });
-      history.replace('/home');
+      if (onLogin) onLogin();
+      history.replace('/dashboard');
     } catch (err: any) {
       setErro(err.message || 'Erro ao fazer login.');
     } finally {
@@ -45,50 +50,50 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent className="login-content" fullscreen>
-        <div className="login-container">
-          <div className="login-card">
-            <h2 className="login-titulo">Login</h2>
+      <TopBar titulo="Acesso ao Sistema" />
+      <IonContent className="custom-background">
+        <div className="container-center">
+          <div className="custom-card fade-in-card" style={{ width: '100%', maxWidth: '400px' }}>
+            <h2 className="custom-title" style={{ marginTop: 0, textAlign: 'center' }}>Login</h2>
 
-            <form onSubmit={handleLogin} noValidate>
-              <div className="login-field">
+            <form onSubmit={handleLogin} noValidate className="custom-form">
+              <div style={{ marginBottom: '15px' }}>
                 <input
                   type="email"
                   placeholder="E-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
+                  className="custom-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
 
-              <div className="login-field">
+              <div className="password-container" style={{ marginBottom: '15px' }}>
                 <input
                   type={mostrarSenha ? 'text' : 'password'}
                   placeholder="Senha"
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
-                  autoComplete="current-password"
+                  className="custom-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
-                <button
-                  type="button"
-                  className="toggle-senha"
-                  onClick={() => setMostrarSenha((v) => !v)}
-                  aria-label={mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'}
-                >
-                  <IonIcon icon={mostrarSenha ? eyeOffOutline : eyeOutline} />
-                </button>
+                <IonIcon 
+                  icon={mostrarSenha ? eyeOffOutline : eyeOutline} 
+                  className="password-icon"
+                  onClick={() => setMostrarSenha((v) => !v)} 
+                />
               </div>
 
               {erro && <p className="login-erro">{erro}</p>}
 
-              <button type="submit" className="login-btn" disabled={carregando}>
+              <button type="submit" className="custom-button" disabled={carregando} style={{ width: '100%', marginTop: '10px' }}>
                 {carregando ? <IonSpinner name="crescent" /> : 'Entrar'}
               </button>
             </form>
 
-            <p className="login-cadastro-link">
+            <p style={{ textAlign: 'center', marginTop: '20px', color: '#666' }}>
               Ainda não possui cadastro?{' '}
-              <a href="/cadastro">Cadastre-se aqui</a>
+              <IonRouterLink routerLink="/cadastro" style={{ color: 'var(--sus-blue)', fontWeight: 'bold', textDecoration: 'none' }}>Cadastre-se aqui</IonRouterLink>
             </p>
           </div>
         </div>

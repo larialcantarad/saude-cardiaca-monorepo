@@ -22,9 +22,9 @@ public class AcompanhamentoService {
             throw new RegraNegocioException("Frequência cardíaca inválida");
         }
 
-        if(acompanhamento.getNivelOxigenacao() < 95 ||
+        if(acompanhamento.getNivelOxigenacao() < 0 ||
                 acompanhamento.getNivelOxigenacao() > 100) {
-            throw new RegraNegocioException("Oxigenação inválida");
+            throw new RegraNegocioException("Oxigenação inválida. Deve estar entre 0 e 100%.");
         }
 
         if(!acompanhamento.getPressaoArterial()

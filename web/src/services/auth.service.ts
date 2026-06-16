@@ -1,5 +1,6 @@
-const BASE_URL = 'http://localhost:8080';
-const TOKEN_KEY = 'saude_cardiaca_token';
+import { API_BASE_URL } from './api';
+
+const TOKEN_KEY = 'token';
 
 export interface LoginData {
   email: string;
@@ -7,7 +8,7 @@ export interface LoginData {
 }
 
 async function login(data: LoginData): Promise<string> {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
