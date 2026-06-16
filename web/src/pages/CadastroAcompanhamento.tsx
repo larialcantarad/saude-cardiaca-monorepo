@@ -28,9 +28,35 @@ const CadastrarAcompanhamento: React.FC = () => {
     async function cadastrar(e: React.FormEvent) {
         e.preventDefault();
 
-        // VALIDAÇÃO DE CAMPOS VAZIOS (Evita requisição inútil)
+        // VALIDAÇÃO DE CAMPOS VAZIOS
         if (!form.frequenciaCardiaca || !form.oxigenacao || !form.peso || !form.pressaoArterial) {
             setToastMessage("Por favor, preencha todos os campos antes de enviar.");
+            setShowToast(true);
+            return;
+        }
+
+        // VALIDAÇÃO DE INTERVALOS CLÍNICOS
+        const fc = parseInt(form.frequenciaCardiaca, 10);
+        const ox = parseInt(form.oxigenacao, 10);
+        const peso = parseFloat(form.peso);
+
+        if (fc < 30 || fc > 220) {
+            setToastMessage("Frequência cardíaca deve estar entre 30 e 220 bpm.");
+            setShowToast(true);
+            return;
+        }
+        if (ox < 70 || ox > 100) {
+            setToastMessage("Oxigenação deve estar entre 70% e 100%.");
+            setShowToast(true);
+            return;
+        }
+        if (peso <= 0 || peso > 300) {
+            setToastMessage("Peso deve estar entre 1 e 300 kg.");
+            setShowToast(true);
+            return;
+        }
+        if (!/^\d{2,3}\/\d{2,3}$/.test(form.pressaoArterial)) {
+            setToastMessage("Pressão arterial deve seguir o formato: 120/80");
             setShowToast(true);
             return;
         }
