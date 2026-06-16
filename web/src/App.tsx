@@ -13,6 +13,7 @@ import Cadastro from './pages/Cadastro';
 import Dashboard from './pages/Dashboard';
 import Sobre from './pages/Sobre';
 import CadastrarAcompanhamento from "./pages/CadastroAcompanhamento";
+import TelaAcompanhamento from "./pages/TelaAcompanhamento";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -63,6 +64,9 @@ const App: React.FC = () => {
               <Route exact path="/dashboard">
                 <Dashboard onLogout={() => setIsAuthenticated(false)} />
               </Route>
+              <Route exact path="/acompanhamentos">
+                <TelaAcompanhamento />
+              </Route>
               <Route exact path="/acompanhamento/novo">
                 <CadastrarAcompanhamento />
               </Route>
@@ -81,7 +85,11 @@ const App: React.FC = () => {
             <IonTabBar slot="bottom" className="sus-tab-bar">
               <IonTabButton tab="dashboard" href="/dashboard" className="sus-tab-button">
                 <IonIcon icon={pulseOutline} />
-                <IonLabel>Pacientes</IonLabel>
+                <IonLabel>Resumo</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="acompanhamentos" href="/acompanhamentos" className="sus-tab-button">
+                <IonIcon icon={heartOutline} />
+                <IonLabel>Registros</IonLabel>
               </IonTabButton>
               <IonTabButton tab="sobre" href="/sobre" className="sus-tab-button">
                 <IonIcon icon={informationCircleOutline} />
