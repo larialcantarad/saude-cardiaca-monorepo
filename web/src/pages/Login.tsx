@@ -39,6 +39,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setCarregando(true);
     try {
       await authService.login({ email, senha });
+      localStorage.setItem('nomeUsuario', email.split('@')[0]); // Salva o nome do email
       if (onLogin) onLogin();
       history.replace('/dashboard');
     } catch (err: any) {

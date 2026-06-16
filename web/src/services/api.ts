@@ -24,7 +24,8 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
   if (!response.ok) {
     let errorMessage = `Erro na API: ${response.statusText}`;
     try {
-      const errorBody = await response.json();
+      const clonedResponse = response.clone();
+      const errorBody = await clonedResponse.json();
       if (errorBody.message || errorBody.erro) {
         errorMessage = errorBody.message || errorBody.erro;
       }
