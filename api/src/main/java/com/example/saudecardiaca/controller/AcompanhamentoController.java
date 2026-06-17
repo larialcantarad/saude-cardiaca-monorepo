@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Parameter;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class AcompanhamentoController {
     @PostMapping
     public ResponseEntity<Acompanhamento> cadastrar(
             @RequestBody Acompanhamento acompanhamento,
-            @AuthenticationPrincipal Usuario usuarioLogado) { // <-- Captura o usuário logado pelo Token JWT
+            @Parameter(hidden = true) @AuthenticationPrincipal Usuario usuarioLogado) { // <-- Captura o usuário logado pelo Token JWT
 
         // Passa o acompanhamento e o usuário autenticado para o service
         Acompanhamento novoAcompanhamento =
@@ -34,7 +35,7 @@ public class AcompanhamentoController {
 
     @GetMapping
     public ResponseEntity<List<Acompanhamento>> listar(
-            @AuthenticationPrincipal Usuario usuarioLogado) { // <-- Captura o usuário logado pelo Token JWT
+            @Parameter(hidden = true) @AuthenticationPrincipal Usuario usuarioLogado) { // <-- Captura o usuário logado pelo Token JWT
 
         // Filtra a listagem trazendo estritamente os dados do usuário autenticado
         return ResponseEntity.ok(service.listarPorUsuario(usuarioLogado.getId()));

@@ -41,6 +41,7 @@ public class AcompanhamentoServiceTest {
         acompanhamento.setFrequenciaCardiaca(80);
         acompanhamento.setNivelOxigenacao(98);
         acompanhamento.setPressaoArterial("120/80");
+        acompanhamento.setPesoCorporal(70.0);
 
         when(acompanhamentoRepository.save(any(Acompanhamento.class))).thenAnswer(invocation -> {
             Acompanhamento a = invocation.getArgument(0);
@@ -60,26 +61,28 @@ public class AcompanhamentoServiceTest {
     void testCadastrarFrequenciaCardiacaInvalida() {
         Acompanhamento acompanhamento = new Acompanhamento();
         acompanhamento.setFrequenciaCardiaca(-10);
+        acompanhamento.setPesoCorporal(70.0);
 
         RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> {
             acompanhamentoService.cadastrar(acompanhamento, usuarioLogado);
         });
 
-        assertEquals("Frequência cardíaca inválida", exception.getMessage());
+        assertEquals("Frequência cardíaca inválida. Deve estar entre 30 e 220 bpm.", exception.getMessage());
         verify(acompanhamentoRepository, never()).save(any());
     }
 
     @Test
-    void testCadastrarOxigenacaoInvalidaMenorQue95() {
+    void testCadastrarOxigenacaoInvalidaMenorQue70() {
         Acompanhamento acompanhamento = new Acompanhamento();
         acompanhamento.setFrequenciaCardiaca(80);
-        acompanhamento.setNivelOxigenacao(90);
+        acompanhamento.setNivelOxigenacao(60);
+        acompanhamento.setPesoCorporal(70.0);
 
         RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> {
             acompanhamentoService.cadastrar(acompanhamento, usuarioLogado);
         });
 
-        assertEquals("Oxigenação inválida", exception.getMessage());
+        assertEquals("Oxigenação inválida. Deve estar entre 70% e 100%.", exception.getMessage());
         verify(acompanhamentoRepository, never()).save(any());
     }
 
@@ -88,12 +91,13 @@ public class AcompanhamentoServiceTest {
         Acompanhamento acompanhamento = new Acompanhamento();
         acompanhamento.setFrequenciaCardiaca(80);
         acompanhamento.setNivelOxigenacao(105);
+        acompanhamento.setPesoCorporal(70.0);
 
         RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> {
             acompanhamentoService.cadastrar(acompanhamento, usuarioLogado);
         });
 
-        assertEquals("Oxigenação inválida", exception.getMessage());
+        assertEquals("Oxigenação inválida. Deve estar entre 70% e 100%.", exception.getMessage());
         verify(acompanhamentoRepository, never()).save(any());
     }
 
@@ -102,13 +106,14 @@ public class AcompanhamentoServiceTest {
         Acompanhamento acompanhamento = new Acompanhamento();
         acompanhamento.setFrequenciaCardiaca(80);
         acompanhamento.setNivelOxigenacao(98);
+        acompanhamento.setPesoCorporal(70.0);
         acompanhamento.setPressaoArterial("12080"); // Formato inválido, sem a barra
 
         RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> {
             acompanhamentoService.cadastrar(acompanhamento, usuarioLogado);
         });
 
-        assertEquals("Pressão arterial inválida", exception.getMessage());
+        assertEquals("Pressão arterial inválida. Use o formato: 120/80", exception.getMessage());
         verify(acompanhamentoRepository, never()).save(any());
     }
 

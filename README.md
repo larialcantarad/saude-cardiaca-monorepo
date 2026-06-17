@@ -1,7 +1,6 @@
 # 🫀 Saúde Cardíaca - Monorepo
 
-Bem-vindo ao repositório oficial do projeto **Saúde Cardíaca**! 
-Este aplicativo é focado no acompanhamento de pacientes, permitindo o registro e monitoramento de sinais vitais cruciais como Frequência Cardíaca, Nível de Oxigenação, Peso Corporal e Pressão Arterial.
+Bem-vindo ao repositório oficial do projeto **Saúde Cardíaca**!Este aplicativo é focado no acompanhamento de pacientes, permitindo o registro e monitoramento de sinais vitais cruciais como Frequência Cardíaca, Nível de Oxigenação, Peso Corporal e Pressão Arterial.
 
 O código-fonte está estruturado no formato **Monorepo**, contendo a API (Back-end) e a interface do usuário (Front-end) integrados de ponta a ponta com autenticação e validações seguras.
 
